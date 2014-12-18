@@ -49,7 +49,12 @@
   (is (string= "1970-01-01T00:00:00.001Z" (rfc3339-string 1d-3)))
   (let ((rfc "2014-12-18T06:56:45.000Z"))
     (let ((unix (+ 173d-3 (timestamp-to-unix (parse-rfc3339-timestring rfc)))))
-      (is (string= "2014-12-18T06:56:45.173Z" (rfc3339-string unix))))))
+      (is (string= "2014-12-18T06:56:45.173Z" (rfc3339-string unix)))))
+
+  ;; Negative epoch time
+  (let ((str "1960-12-18T06:56:45.000Z"))
+    (let ((unix (timestamp-to-unix (parse-rfc3339-timestring str))))
+      (is (string= "1960-12-18T06:56:45.500Z" (rfc3339-string (+ 500d-3 unix)))))))
 
 (test expected-failures
   ;; local-time does not handle leap seconds

@@ -33,6 +33,6 @@ the Unix epoch, to our canonical RFC 3339 string format."
   "Convert the double float REAL, which must be a number of seconds
 since the Unix epoch, to our canonical RFC 3339 string format.  Some
 lisp implementations may not support subsecond granularity."
-  (multiple-value-bind (unix remainder) (truncate real)
+  (multiple-value-bind (unix remainder) (floor real)
     (let ((nsec (round (* (expt 10 9) remainder))))
       (rfc3339-string (unix-to-timestamp unix :nsec nsec)))))
