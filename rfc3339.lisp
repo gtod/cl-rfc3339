@@ -36,3 +36,9 @@ lisp implementations may not support subsecond granularity."
   (multiple-value-bind (unix remainder) (floor real)
     (let ((nsec (round (* (expt 10 9) remainder))))
       (rfc3339-string (unix-to-timestamp unix :nsec nsec)))))
+
+;; See http://naggum.no/lugm-time.html
+;; But also local-time:valid-timestamp-p
+(defvar *least-rfc3339-string* (rfc3339-string (make-timestamp :day -146097))
+  "A somewhat arbitrary 'earliest' or least RFC 3339 string in our
+canonical format.  Note well its value before using it for anything.")
